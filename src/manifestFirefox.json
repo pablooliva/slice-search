@@ -15,33 +15,11 @@
 
   "background": {
     "scripts": [
-      "utils.js",
-      "browser-polyfill.min.js",
       "background.js"
     ]
   },
 
   "omnibox": {
     "keyword" : "ss"
-  },
-
-  "permissions": [
-    "",
-    "storage"
-  ],
-
-  "options_ui": {
-    "page": "options.html",
-    "open_in_tab": true
-  },
-
-  "content_scripts": [
-    {
-      "exclude_matches": ["*://*.domain.com/*"],
-      "matches": ["<all_urls>"],
-      "js": [".js"],
-      "css": [".css"]
-    }
-  ]
-
+  }
 }
