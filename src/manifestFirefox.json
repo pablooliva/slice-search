@@ -6,11 +6,11 @@
   "manifest_version": 2,
 
   "icons": {
-    "32": "icons/ss-32x32-optimized.svg",
-    "48": "icons/ss-48x48-optimized.svg",
-    "64": "icons/ss-64x64-optimized.svg",
-    "96": "icons/ss-96x96-optimized.svg",
-    "128": "icons/ss-128x128-optimized.svg"
+    "32": "icons/slice-optimized.svg",
+    "48": "icons/slice-optimized.svg",
+    "64": "icons/slice-optimized.svg",
+    "96": "icons/slice-optimized.svg",
+    "128": "icons/slice-optimized.svg"
   },
 
   "background": {
