@@ -1,8 +1,7 @@
 {
-
   "name": "Slice Custom Search",
   "short_name": "Slice Search",
-  "description" : "To use, type 'ss' plus keyword for custom search engine & search term into the url bar. (e.g. ss google <search text>).",
+  "description" : "To use, type 'ss' into the url bar, plus keyword for custom-defined search engine followed by search terms for a custom Slice Search. (e.g. ss ng <search text>).",
   "version": "1.0",
   "manifest_version": 2,
 
@@ -27,7 +26,7 @@
   },
 
   "permissions": [
-    "https://raw.githubusercontent.com/rsins/ravi-firefox-custom-search-engines/master/SampleCustomEngines/PopularSearchEngines.txt",
+    "",
     "storage"
   ],
 
@@ -38,10 +37,10 @@
 
   "content_scripts": [
     {
-      "exclude_matches": ["*://*.mattermost.com/*"],
+      "exclude_matches": ["*://*.domain.com/*"],
       "matches": ["<all_urls>"],
-      "js": ["neverAgain.js"],
-      "css": ["neverAgain.css"]
+      "js": [".js"],
+      "css": [".css"]
     }
   ]
 
