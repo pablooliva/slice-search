@@ -1,0 +1,36 @@
+{
+  "name": "Slice Custom Search",
+  "short_name": "Slice Search",
+  "description" : "To use, type 'ss' into the url bar, plus keyword for custom-defined search engine followed by search terms for a custom Slice Search. (e.g. ss ng <search text>).",
+  "version": "1.0",
+  "manifest_version": 2,
+
+  "icons": {
+    "48": "icons/icon48.png",
+    "64": "icons/icon64.png",
+    "128": "icons/icon128.png"
+  },
+
+  "background": {
+    "scripts": [
+    	"utils.js",
+    	"browser-polyfill.min.js",
+    	"background.js"
+    ]
+  },
+
+  "omnibox": {
+  	  "keyword" : "ss"
+  },
+
+  "permissions": [
+      "",
+  	  "storage"
+  ],
+
+  "options_ui": {
+  	  "page": "options.html",
+  	  "open_in_tab": true
+  }
+
+}

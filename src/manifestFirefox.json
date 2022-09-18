@@ -1,0 +1,48 @@
+{
+
+  "name": "Slice Custom Search",
+  "short_name": "Slice Search",
+  "description" : "To use, type 'ss' plus keyword for custom search engine & search term into the url bar. (e.g. ss google <search text>).",
+  "version": "1.0",
+  "manifest_version": 2,
+
+  "icons": {
+    "32": "icons/ss-32x32-optimized.svg",
+    "48": "icons/ss-48x48-optimized.svg",
+    "64": "icons/ss-64x64-optimized.svg",
+    "96": "icons/ss-96x96-optimized.svg",
+    "128": "icons/ss-128x128-optimized.svg"
+  },
+
+  "background": {
+    "scripts": [
+      "utils.js",
+      "browser-polyfill.min.js",
+      "background.js"
+    ]
+  },
+
+  "omnibox": {
+    "keyword" : "ss"
+  },
+
+  "permissions": [
+    "https://raw.githubusercontent.com/rsins/ravi-firefox-custom-search-engines/master/SampleCustomEngines/PopularSearchEngines.txt",
+    "storage"
+  ],
+
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+
+  "content_scripts": [
+    {
+      "exclude_matches": ["*://*.mattermost.com/*"],
+      "matches": ["<all_urls>"],
+      "js": ["neverAgain.js"],
+      "css": ["neverAgain.css"]
+    }
+  ]
+
+}
