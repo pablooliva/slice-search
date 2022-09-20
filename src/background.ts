@@ -17,7 +17,9 @@ class SliceBackground {
 
 		browser.omnibox.onInputEntered.addListener((inputText) => {
 			console.log('ENTERED', inputText);
-			const url = new Search().getRequestURL(inputText);
+			const search = new Search();
+			const key = search.getCustomSearchEngineKey(inputText);
+			const url = search.getRequestURL(key, inputText);
 			browser.tabs.update({ url }).catch((error) => console.error(error));
 		});
 	}
