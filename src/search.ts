@@ -8,7 +8,7 @@ interface CustomSearchEngines {
 	[key: string]: {
 		label: string;
 		searchIdParams: CSEIdParams;
-		narrowingSearchTerms?: string[];
+		searchNarrowingTerms?: string[];
 	};
 }
 
@@ -19,13 +19,28 @@ const customSearchEngines: CustomSearchEngines = {
 		searchIdParams: {
 			cx: '838e1bad8dae94387',
 		},
+		searchNarrowingTerms: ['angular'],
 	},
 	ts: {
 		label: 'Typescript development',
 		searchIdParams: {
 			cx: '75de8fa5bb90f40b2',
 		},
-		narrowingSearchTerms: ['typescript'],
+		searchNarrowingTerms: ['typescript'],
+	},
+	js: {
+		label: 'JavaScript development',
+		searchIdParams: {
+			cx: '4061c9c6baa7e4a11',
+		},
+		searchNarrowingTerms: ['javascript'],
+	},
+	rx: {
+		label: 'RxJS',
+		searchIdParams: {
+			cx: '431dabc81e7f84b1a',
+		},
+		searchNarrowingTerms: ['rxjs'],
 	},
 };
 
@@ -75,11 +90,11 @@ export class Search {
 
 		let searchTerms = '';
 		if (
-			Array.isArray(this._customSearchEngines[key].narrowingSearchTerms) &&
-			this._customSearchEngines[key].narrowingSearchTerms?.length !== 0
+			Array.isArray(this._customSearchEngines[key].searchNarrowingTerms) &&
+			this._customSearchEngines[key].searchNarrowingTerms?.length !== 0
 		) {
 			searchTerms +=
-				this._customSearchEngines[key].narrowingSearchTerms?.join(' ') + ' ';
+				this._customSearchEngines[key].searchNarrowingTerms?.join(' ') + ' ';
 		}
 
 		searchTerms += inputText.substring(keyLenPlusTrailingSpace);

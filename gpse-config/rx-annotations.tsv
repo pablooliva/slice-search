@@ -1,0 +1,6 @@
+URL	Label	Score
+*.thinkrx.io/rxjs/*	_include_	0.800000
+*.stackoverflow.com/*	_include_	0.400000
+*.rxmarbles.com/*	_include_	0.700000
+*.reactivex.io/rxjs/manual/*	_include_	0.900000
+*.learnrxjs.io/*	_include_	1.000000
