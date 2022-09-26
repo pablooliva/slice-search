@@ -8,6 +8,7 @@ interface CustomSearchEngines {
 	[key: string]: {
 		label: string;
 		searchIdParams: CSEIdParams;
+		narrowingSearchTerms?: string[];
 	};
 }
 
@@ -19,11 +20,19 @@ const customSearchEngines: CustomSearchEngines = {
 			cx: '838e1bad8dae94387',
 		},
 	},
+	ts: {
+		label: 'Typescript development',
+		searchIdParams: {
+			cx: '75de8fa5bb90f40b2',
+		},
+		narrowingSearchTerms: ['typescript'],
+	},
 };
 
 type CustomSearchEngineKeys = keyof typeof customSearchEngines;
 
 export class Search {
+	private _customSearchEngines: CustomSearchEngines = customSearchEngines;
 	private _baseUrl = 'https://cse.google.com/cse';
 
 	private _buildUrl(key: CustomSearchEngineKeys, searchTerms: string): URL {
@@ -63,7 +72,18 @@ export class Search {
 		inputText: string,
 	): string {
 		const keyLenPlusTrailingSpace = key.toString().length + 1;
-		return inputText.substring(keyLenPlusTrailingSpace);
+
+		let searchTerms = '';
+		if (
+			Array.isArray(this._customSearchEngines[key].narrowingSearchTerms) &&
+			this._customSearchEngines[key].narrowingSearchTerms?.length !== 0
+		) {
+			searchTerms +=
+				this._customSearchEngines[key].narrowingSearchTerms?.join(' ') + ' ';
+		}
+
+		searchTerms += inputText.substring(keyLenPlusTrailingSpace);
+		return searchTerms;
 	}
 
 	public getRequestURL(key: CustomSearchEngineKeys, inputText: string): string {
@@ -72,7 +92,7 @@ export class Search {
 
 	public getCustomSearchEngineKey(inputText: string): CustomSearchEngineKeys {
 		const key = inputText.split(' ')[0];
-		Assert.assert(Object.keys(customSearchEngines).includes(key));
+		Assert.assert(Object.keys(this._customSearchEngines).includes(key));
 		return key;
 	}
 }
