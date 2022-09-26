@@ -11,6 +11,7 @@ interface CustomSearchEngines {
 	};
 }
 
+// TODO: move out to sep. config class
 const customSearchEngines: CustomSearchEngines = {
 	ng: {
 		label: 'Angular development',
@@ -28,10 +29,20 @@ export class Search {
 	private _buildUrl(key: CustomSearchEngineKeys, searchTerms: string): URL {
 		// Ex: 'https://cse.google.com/cse?cx=838e1bad8dae94387#gsc.q=testing router angular'
 		let url = new URL(this._baseUrl);
-		url = this._urlEncodeParams(url, customSearchEngines[key].searchIdParams);
+		url = this._urlEncodeParams(
+			url,
+			this._getSearchIdParams(key, customSearchEngines),
+		);
 		url = this._addSearchTerms(url, searchTerms);
 
 		return url;
+	}
+
+	private _getSearchIdParams(
+		key: CustomSearchEngineKeys,
+		customSearchEngines: CustomSearchEngines,
+	): CSEIdParams {
+		return customSearchEngines[key].searchIdParams;
 	}
 
 	private _urlEncodeParams(url: URL, params: Record<string, string>): URL {
