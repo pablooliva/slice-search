@@ -1,15 +1,15 @@
 import { Assert } from './assert';
 
-interface CSEIdParams {
-	[key: string]: string;
+export interface CustomSearchEnginesOption {
+	label: string;
+	searchIdParams: {
+		cx: string;
+	};
+	searchNarrowingTerms?: string[];
 }
 
-interface CustomSearchEngines {
-	[key: string]: {
-		label: string;
-		searchIdParams: CSEIdParams;
-		searchNarrowingTerms?: string[];
-	};
+export interface CustomSearchEngines {
+	[key: string]: CustomSearchEnginesOption;
 }
 
 // TODO: move out to sep. config class
@@ -65,7 +65,7 @@ export class Search {
 	private _getSearchIdParams(
 		key: CustomSearchEngineKeys,
 		customSearchEngines: CustomSearchEngines,
-	): CSEIdParams {
+	): CustomSearchEnginesOption['searchIdParams'] {
 		return customSearchEngines[key].searchIdParams;
 	}
 
