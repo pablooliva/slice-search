@@ -3,6 +3,10 @@ import { CustomSearchEngines, CustomSearchEnginesOption } from './search';
 
 export class Options {
 	private _storageKey = 'cseOptions';
+	private _form = document.querySelector('#options-form');
+	private _formListElement = document.querySelector('.form-list');
+	private _formAddOptionBtn = document.querySelector('#form-add-option');
+	private _formSaveBtn = document.querySelector('#form-submit-btn');
 
 	public cseDefaultOptions: CustomSearchEngines = {
 		ng: {
@@ -39,6 +43,8 @@ export class Options {
 		this.accessStorage().then((storedItems) => {
 			this._generateOptionsHtml(storedItems);
 		});
+
+		this._addEventListeners();
 	}
 
 	public accessStorage() {
@@ -60,47 +66,76 @@ export class Options {
 		});
 	}
 
+	private _addEventListeners() {
+		this._addAddFormOptionListener();
+		this._addSaveListener();
+	}
+
+	private _addAddFormOptionListener() {
+		if (this._formAddOptionBtn) {
+			this._formAddOptionBtn.addEventListener('click', () => {
+				if (this._formListElement) {
+					this._formListElement.innerHTML += this._buildFormRow();
+				}
+			});
+		}
+	}
+
+	private _addSaveListener() {
+		// TODO
+		if (this._formSaveBtn && this._form) {
+			this._formSaveBtn.addEventListener('click', () => {
+				console.warn(new FormData(this._form as HTMLFormElement));
+			});
+		}
+	}
+
 	private _generateOptionsHtml(cseOptions: CustomSearchEngines) {
-		const optionFormRow = (key: string, cse: CustomSearchEnginesOption) => {
-			const prepend = 'cse-' + key;
-			return `<li>
-<div class="input-container">
-<label for="${prepend}-label">Label</label>
-<input type="text" id="${prepend}-label" name="${prepend}-label" value="${cse.label}" />
-</div>
-
-<div class="input-container">
-<label for="${prepend}-key">Key</label>
-<input type="text" id="${prepend}-key" name="${prepend}-key" value="${key}" />
-</div>
-
-<div class="input-container">
-<label for="${prepend}-cx-id">CSE Id</label>
-<input type="text" id="${prepend}-cx-id" name="${prepend}-cx-id" value="${cse.searchIdParams.cx}" />
-</div>
-
-<div class="input-container">
-<label for="${prepend}-search-narrowing">Search narrowing terms</label>
-<input
-type="text"
-id="${prepend}-search-narrowing"
-name="${prepend}-search-narrowing"
-value="${cse.searchNarrowingTerms}"
-/>
-</div>
-</li>`;
-		};
-
-		const formList = document.querySelector('.form-list');
 		let append = '';
 
 		Object.keys(cseOptions).forEach((key) => {
-			append += optionFormRow(key, cseOptions[key]);
+			append += this._buildFormRow(key, cseOptions[key]);
 		});
 
-		if (formList) {
-			formList.innerHTML = append;
+		if (this._formListElement) {
+			this._formListElement.innerHTML = append;
 		}
+	}
+
+	private _buildFormRow(key?: string, cse?: CustomSearchEnginesOption) {
+		const substitute = Date.now();
+		const elemId = (post: string) => 'cse-' + (key ?? substitute) + '-' + post;
+		const getValue = (prop: unknown) => prop ?? '';
+
+		return `<li>
+      <div class="input-container">
+      <label for="${elemId('label')}">Label</label>
+      <input type="text" id="${elemId('label')}" name="${elemId('label')}"
+        value="${getValue(cse?.label)}" />
+      </div>
+
+      <div class="input-container">
+      <label for="${elemId('key')}">Key</label>
+      <input type="text" id="${elemId('key')}" name="${elemId('key')}"
+        value="${getValue(key)}" />
+      </div>
+
+      <div class="input-container">
+      <label for="${elemId('cx-id')}">CSE Id</label>
+      <input type="text" id="${elemId('cx-id')}" name="${elemId('cx-id')}"
+        value="${getValue(cse?.searchIdParams.cx)}" />
+      </div>
+
+      <div class="input-container">
+      <label for="${elemId('search-narrowing')}">Search narrowing terms</label>
+      <input
+        type="text"
+        id="${elemId('search-narrowing')}"
+        name="${elemId('search-narrowing')}"
+        value="${getValue(cse?.searchNarrowingTerms)}"
+      />
+      </div>
+    </li>`;
 	}
 }
 
