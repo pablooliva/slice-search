@@ -11,3 +11,5 @@ URL	Label	Score
 *.dev.to/*	_include_
 *.angular.io/*	_include_	1.000000
 *.stackoverflow.com/*	_include_
+*.primefaces.org/primeng/setup/* _include_
+*.material.angular.io/cdk/* _include_
