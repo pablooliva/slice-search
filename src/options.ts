@@ -82,10 +82,33 @@ export class Options {
 	}
 
 	private _addSaveListener() {
-		// TODO
 		if (this._formSaveBtn && this._form) {
 			this._formSaveBtn.addEventListener('click', () => {
-				console.warn(new FormData(this._form as HTMLFormElement));
+				const formData = new FormData(this._form as HTMLFormElement);
+				const options: CustomSearchEngines = {};
+				let tempKey = '';
+
+				for (const pair of formData.entries()) {
+					if (pair[0].match(/-key$/g)) {
+						tempKey = pair[1] as string;
+						options[tempKey] = {} as CustomSearchEnginesOption;
+					}
+					if (pair[0].match(/-label$/)) {
+						options[tempKey]['label'] = pair[1] as string;
+					}
+					if (pair[0].match(/-cx-id$/)) {
+						options[tempKey]['searchIdParams'] = { cx: pair[1] as string };
+					}
+					if (pair[0].match(/-search-narrowing$/)) {
+						options[tempKey]['searchNarrowingTerms'] = (
+							pair[1] as string
+						).split(' ');
+					}
+				}
+
+				browser.storage.sync.set({
+					[this._storageKey]: options,
+				});
 			});
 		}
 	}
@@ -109,15 +132,15 @@ export class Options {
 
 		return `<li>
       <div class="input-container">
-      <label for="${elemId('label')}">Label</label>
-      <input type="text" id="${elemId('label')}" name="${elemId('label')}"
-        value="${getValue(cse?.label)}" />
-      </div>
-
-      <div class="input-container">
       <label for="${elemId('key')}">Key</label>
       <input type="text" id="${elemId('key')}" name="${elemId('key')}"
         value="${getValue(key)}" />
+      </div>
+
+      <div class="input-container">
+      <label for="${elemId('label')}">Label</label>
+      <input type="text" id="${elemId('label')}" name="${elemId('label')}"
+        value="${getValue(cse?.label)}" />
       </div>
 
       <div class="input-container">
