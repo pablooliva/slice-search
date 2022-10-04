@@ -1,4 +1,5 @@
 import * as browser from 'webextension-polyfill';
+import { runtime } from 'webextension-polyfill';
 import { CustomSearchEngines, Search } from './search';
 import { Options } from './options';
 
@@ -47,6 +48,10 @@ class SliceBackground {
 			const key = search.getCustomSearchEngineKey(inputText);
 			const url = search.getRequestURL(key, inputText);
 			browser.tabs.update({ url }).catch((error) => console.error(error));
+		});
+
+		browser.browserAction.onClicked.addListener(() => {
+			runtime.openOptionsPage();
 		});
 	}
 }

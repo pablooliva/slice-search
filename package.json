@@ -18,7 +18,7 @@
     "tsc": "tsc",
     "clean": "rm -rf dist/",
     "move-core": "cp src/privacy_policy.txt dist/privacy_policy.txt && cp src/options.html dist/options.html",
-    "move-ff": "cp src/manifestFirefox.json dist/manifest.json && mkdir dist/icons && cp icons/slice-optimized.svg dist/icons/slice-optimized.svg",
+    "move-ff": "cp src/manifestFirefox.json dist/manifest.json && mkdir dist/icons && cp icons/slice-optimized.svg dist/icons/slice-optimized.svg && cp icons/slice-optimized-19x19.png dist/icons/slice-optimized-19x19.png && cp icons/slice-optimized-38x38.png dist/icons/slice-optimized-38x38.png",
     "move-chr": "cp src/manifestChrome.json dist/manifest.json && mkdir dist/icons && cp icons/icon16.png dist/icons/icon16.png && cp icons/icon48.png dist/icons/icon48.png && cp icons/icon128.png dist/icons/icon128.png",
     "build-core": "npm run clean && parcel build src/options.ts --target options && parcel build --target main",
     "build-ff": "npm run build-core && npm run move-ff && npm run move-core",
