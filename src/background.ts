@@ -6,7 +6,8 @@ class SliceBackground {
 	private _customSearchEngines!: CustomSearchEngines;
 
 	constructor() {
-		this._initOptions();
+		this._setOptions();
+		this._watchForOptionsChanges();
 
 		browser.omnibox.setDefaultSuggestion({
 			description: `Search a custom Slice: type "ss" [custom-search-keyword] [search-terms]`,
@@ -15,11 +16,23 @@ class SliceBackground {
 		this._setListeners();
 	}
 
-	private _initOptions() {
+	private _setOptions() {
 		const options = browser.storage.sync.get();
 		options.then((result) => {
+			if (result[Options.storageKey] === undefined) {
+				browser.storage.sync.set({
+					[Options.storageKey]: Options.cseDefaultOptions,
+				});
+			}
+
 			this._customSearchEngines =
 				result[Options.storageKey] ?? Options.cseDefaultOptions;
+		});
+	}
+
+	private _watchForOptionsChanges() {
+		browser.storage.sync.onChanged.addListener(() => {
+			this._setOptions();
 		});
 	}
 
