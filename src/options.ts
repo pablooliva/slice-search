@@ -2,13 +2,8 @@ import * as browser from 'webextension-polyfill';
 import { CustomSearchEngines, CustomSearchEnginesOption } from './search';
 
 export class Options {
-	private _storageKey = 'cseOptions';
-	private _form = document.querySelector('#options-form');
-	private _formListElement = document.querySelector('.form-list');
-	private _formAddOptionBtn = document.querySelector('#form-add-option');
-	private _formSaveBtn = document.querySelector('#form-submit-btn');
-
-	public cseDefaultOptions: CustomSearchEngines = {
+	public static storageKey = 'cseOptions';
+	public static cseDefaultOptions: CustomSearchEngines = {
 		ng: {
 			label: 'Angular development',
 			searchIdParams: {
@@ -39,6 +34,11 @@ export class Options {
 		},
 	};
 
+	private _form = document.querySelector('#options-form');
+	private _formListElement = document.querySelector('.form-list');
+	private _formAddOptionBtn = document.querySelector('#form-add-option');
+	private _formSaveBtn = document.querySelector('#form-submit-btn');
+
 	constructor() {
 		this.accessStorage().then((storedItems) => {
 			this._generateOptionsHtml(storedItems);
@@ -48,19 +48,19 @@ export class Options {
 	}
 
 	public accessStorage() {
-		const storageTest = browser.storage.sync.get(this._storageKey);
+		const storageTest = browser.storage.sync.get();
 
 		return new Promise<CustomSearchEngines>((resolve) => {
 			storageTest.then((result) => {
-				if (Object.keys(result).length === 0) {
+				if (Object.keys(result[Options.storageKey]).length === 0) {
 					browser.storage.sync.set({
-						[this._storageKey]: this.cseDefaultOptions,
+						[Options.storageKey]: Options.cseDefaultOptions,
 					});
 				}
 
 				const storageItem = browser.storage.sync.get();
 				storageItem.then((storedItems) => {
-					resolve(storedItems[this._storageKey]);
+					resolve(storedItems[Options.storageKey]);
 				});
 			});
 		});
@@ -107,7 +107,7 @@ export class Options {
 				}
 
 				browser.storage.sync.set({
-					[this._storageKey]: options,
+					[Options.storageKey]: options,
 				});
 			});
 		}

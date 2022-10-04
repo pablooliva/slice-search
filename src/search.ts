@@ -12,50 +12,22 @@ export interface CustomSearchEngines {
 	[key: string]: CustomSearchEnginesOption;
 }
 
-// TODO: move out to sep. config class
-const customSearchEngines: CustomSearchEngines = {
-	ng: {
-		label: 'Angular development',
-		searchIdParams: {
-			cx: '838e1bad8dae94387',
-		},
-		searchNarrowingTerms: ['angular'],
-	},
-	ts: {
-		label: 'Typescript development',
-		searchIdParams: {
-			cx: '75de8fa5bb90f40b2',
-		},
-		searchNarrowingTerms: ['typescript'],
-	},
-	js: {
-		label: 'JavaScript development',
-		searchIdParams: {
-			cx: '4061c9c6baa7e4a11',
-		},
-		searchNarrowingTerms: ['javascript'],
-	},
-	rx: {
-		label: 'RxJS',
-		searchIdParams: {
-			cx: '431dabc81e7f84b1a',
-		},
-		searchNarrowingTerms: ['rxjs'],
-	},
-};
-
-type CustomSearchEngineKeys = keyof typeof customSearchEngines;
+type CustomSearchEngineKeys = string;
 
 export class Search {
-	private _customSearchEngines: CustomSearchEngines = customSearchEngines;
+	private readonly _customSearchEngines!: CustomSearchEngines;
 	private _baseUrl = 'https://cse.google.com/cse';
+
+	constructor(customSearchEngine: CustomSearchEngines) {
+		this._customSearchEngines = customSearchEngine;
+	}
 
 	private _buildUrl(key: CustomSearchEngineKeys, searchTerms: string): URL {
 		// Ex: 'https://cse.google.com/cse?cx=838e1bad8dae94387#gsc.q=testing router angular'
 		let url = new URL(this._baseUrl);
 		url = this._urlEncodeParams(
 			url,
-			this._getSearchIdParams(key, customSearchEngines),
+			this._getSearchIdParams(key, this._customSearchEngines),
 		);
 		url = this._addSearchTerms(url, searchTerms);
 
