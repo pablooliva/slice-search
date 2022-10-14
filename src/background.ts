@@ -20,14 +20,7 @@ class SliceBackground {
 	private _setOptions() {
 		const options = browser.storage.sync.get();
 		options.then((result) => {
-			if (result[Options.storageKey] === undefined) {
-				browser.storage.sync.set({
-					[Options.storageKey]: Options.cseDefaultOptions,
-				});
-			}
-
-			this._customSearchEngines =
-				result[Options.storageKey] ?? Options.cseDefaultOptions;
+			this._customSearchEngines = result[Options.storageKey];
 		});
 	}
 

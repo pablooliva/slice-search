@@ -3,36 +3,6 @@ import { CustomSearchEngines, CustomSearchEnginesOption } from './search';
 
 export class Options {
 	public static storageKey = 'cseOptions';
-	public static cseDefaultOptions: CustomSearchEngines = {
-		ng: {
-			label: 'Angular development',
-			searchIdParams: {
-				cx: '838e1bad8dae94387',
-			},
-			searchNarrowingTerms: ['angular'],
-		},
-		ts: {
-			label: 'Typescript development',
-			searchIdParams: {
-				cx: '75de8fa5bb90f40b2',
-			},
-			searchNarrowingTerms: ['typescript'],
-		},
-		js: {
-			label: 'JavaScript development',
-			searchIdParams: {
-				cx: '4061c9c6baa7e4a11',
-			},
-			searchNarrowingTerms: ['javascript'],
-		},
-		rx: {
-			label: 'RxJS',
-			searchIdParams: {
-				cx: '431dabc81e7f84b1a',
-			},
-			searchNarrowingTerms: ['rxjs'],
-		},
-	};
 
 	private _form = document.querySelector('#options-form');
 	private _formListElement = document.querySelector('.form-list');
@@ -51,13 +21,7 @@ export class Options {
 		const storageTest = browser.storage.sync.get();
 
 		return new Promise<CustomSearchEngines>((resolve) => {
-			storageTest.then((result) => {
-				if (Object.keys(result[Options.storageKey]).length === 0) {
-					browser.storage.sync.set({
-						[Options.storageKey]: Options.cseDefaultOptions,
-					});
-				}
-
+			storageTest.then(() => {
 				const storageItem = browser.storage.sync.get();
 				storageItem.then((storedItems) => {
 					resolve(storedItems[Options.storageKey]);
