@@ -20,7 +20,31 @@
 	</style>
 
 	<body>
-		<h1>Settings:</h1>
+		<h1>Settings</h1>
+		<p>Configuration options:</p>
+		<ol>
+			<li>
+				<strong>Key</strong>: These characters will be used to identify which
+				GPSE (Custom Search Engine) to use for your search.
+			</li>
+			<li>
+				<strong>Label</strong>: Conveniently identify the intended domain of
+				your search, used only as a reminder and has no impact on functionality.
+			</li>
+			<li>
+				<strong>CSE Id</strong>: The id provided by GPSE.
+				<a href="https://github.com/pablooliva/slice-search">Instructions</a>
+				are available for how to get a GPSE id.
+			</li>
+			<li>
+				<strong>Search narrowing terms</strong>: It is useful to add the topic
+				of your search in this field. This term(s) will be appended
+				automatically to your search query. This is useful in cases such as when
+				we have a site like stackoverlow.com in our list of domains to search in
+				GPSE, and we need to search that domain within a specific context. This
+				context is defined by the "search narrowing terms."
+			</li>
+		</ol>
 		<form id="options-form">
 			<button id="form-add-option" type="button">Add option</button>
 			<ol class="form-list"></ol>

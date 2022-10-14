@@ -1,7 +1,7 @@
 {
 	"name": "Slice Custom Search",
 	"short_name": "Slice Search",
-	"description": "To use, type 'ss' into the url bar, plus keyword for custom-defined search engine followed by search terms for a custom Slice Search. (e.g. ss ng <search text>).",
+	"description": "Using the omnibar (i.e URL bar), use the following pattern: [ss] [key] [query]. Typing 'ss' into the omnibar activates the use of this extension. 'key' is the key defined in the settings below. 'query' is your search term(s).",
 	"version": "1.3",
 	"manifest_version": 2,
 
